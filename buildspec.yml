@@ -22,7 +22,7 @@ phases:
   post_build:
     commands:
       - echo "HTML report generated."
-      - aws s3 cp ./reports/TestResults___main__.ToDoListTests_$(date +"%Y-%m-%d_%H-%M-%S").html s3://automated-test-reports/reports/
+      - aws s3 cp ./reports/TestResults___main__.ToDoListTests.html s3://automated-test-reports/reports/
       - echo "HTML report uploaded to S3."
 
 artifacts:

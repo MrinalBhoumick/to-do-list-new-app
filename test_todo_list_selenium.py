@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     # Upload report to S3 bucket
     bucket_name = 'automated-test-reports'
-    file_name = f'TestResults___main__.ToDoListTests_{time.strftime("%Y-%m-%d_%H-%M-%S")}.html'
+    file_name = f'TestResults___main__.ToDoListTests.html'
 
     s3 = boto3.client('s3')
     s3.upload_file(os.path.join(report_path, file_name), bucket_name, f'reports/{file_name}')
