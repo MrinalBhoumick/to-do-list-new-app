@@ -54,6 +54,9 @@ class ToDoListTests(unittest.TestCase):
 
 if __name__ == "__main__":
     report_path = './reports'
+    if not os.path.exists(report_path):
+        os.makedirs(report_path)
+        
     suite = unittest.TestLoader().loadTestsFromTestCase(ToDoListTests)
     runner = HtmlTestRunner.HTMLTestRunner(output=report_path, report_title="ToDo List Test Report", descriptions="Test results for ToDo List application")
     result = runner.run(suite)
