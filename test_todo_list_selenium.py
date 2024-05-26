@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import time
 import unittest
@@ -8,11 +7,8 @@ import HtmlTestRunner
 class ToDoListTests(unittest.TestCase):
 
     def setUp(self):
-        # Verify this path is correct and chromedriver.exe exists here
-        chrome_driver_path = r'C:\Users\Mrinal Bhoumick\Downloads\chrome-win32\chromedriver.exe'
-        service = Service(executable_path=chrome_driver_path)
-        self.driver = webdriver.Chrome(service=service)
-        self.driver.get("http://localhost:8000")  # Use the URL where your app is hosted
+        self.driver = webdriver.Chrome()
+        self.driver.get("https://mrinalbhoumick.github.io/to-do-list-new-app/")  # Use the URL where your app is hosted
 
     def tearDown(self):
         self.driver.quit()
