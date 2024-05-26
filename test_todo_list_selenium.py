@@ -10,7 +10,8 @@ class ToDoListTests(unittest.TestCase):
     def setUp(self):
         options = Options()
         options.add_argument("--headless")  # Run Chrome in headless mode
-        self.driver = webdriver.Chrome(options=options, executable_path="/usr/local/bin/chromedriver")
+        options.binary_location = "/usr/bin/google-chrome"  # Path to Chrome binary
+        self.driver = webdriver.Chrome(options=options)
         self.driver.get("https://mrinalbhoumick.github.io/to-do-list-new-app/")
 
     def tearDown(self):
