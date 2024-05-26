@@ -54,16 +54,13 @@ class ToDoListTests(unittest.TestCase):
 
 if __name__ == "__main__":
     report_path = './reports'
-    if not os.path.exists(report_path):
-        os.makedirs(report_path)
-        
     suite = unittest.TestLoader().loadTestsFromTestCase(ToDoListTests)
+    timestamp = time.strftime('%Y-%m-%d_%H-%M-%S')
+    file_name = f"TestResults___main__.ToDoListTests_{timestamp}.html"
     runner = HtmlTestRunner.HTMLTestRunner(output=report_path, report_title="ToDo List Test Report", descriptions="Test results for ToDo List application")
     result = runner.run(suite)
 
     # Upload report to S3 bucket
     bucket_name = 'automated-test-reports'
-    file_name = f'TestResults___main__.ToDoListTests.html'
-
     s3 = boto3.client('s3')
     s3.upload_file(os.path.join(report_path, file_name), bucket_name, f'reports/{file_name}')
