@@ -6,6 +6,7 @@ phases:
       python: 3.12
     commands:
       - python -m pip install selenium
+      - python -m pip install html-testRunner
       - wget -N https://chromedriver.storage.googleapis.com/94.0.4606.61/chromedriver_linux64.zip
       - unzip chromedriver_linux64.zip
   build:
