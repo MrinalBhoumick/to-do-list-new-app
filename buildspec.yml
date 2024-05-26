@@ -21,8 +21,9 @@ phases:
       - python test_todo_list_selenium.py
   post_build:
     commands:
-      - aws s3 cp ./reports/TestResults___main__.ToDoListTests_2024-05-26_18-50-05.html s3://automated-test-reports/reports/
-      - echo "HTML report uploaded to S3"
+      - echo "HTML report generated."
+      - aws s3 cp ./reports/TestResults___main__.ToDoListTests_$(date +"%Y-%m-%d_%H-%M-%S").html s3://automated-test-reports/reports/
+      - echo "HTML report uploaded to S3."
 
 artifacts:
   files:
