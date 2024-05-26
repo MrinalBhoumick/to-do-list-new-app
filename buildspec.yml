@@ -42,5 +42,5 @@ phases:
 artifacts:
   files:
     - reports.zip
-    - '**/*.html'
+    - "**/*.html"
   base-directory: reports
