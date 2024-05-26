@@ -1,0 +1,46 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+    commands:
+      - echo Installing Chrome
+      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      - apt-get install -y ./google-chrome-stable_current_amd64.deb
+      - echo Installing ChromeDriver
+      - CHROME_VERSION=$(google-chrome --version | cut -d' ' -f3 | cut -d'.' -f1)
+      - wget https://chromedriver.storage.googleapis.com/$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)/chromedriver_linux64.zip
+      - unzip chromedriver_linux64.zip -d /usr/local/bin/
+      - echo Installing Python dependencies
+      - pip install --upgrade pip
+      - pip install selenium
+      - pip install HtmlTestRunner
+
+  pre_build:
+    commands:
+      - echo Pre-build phase
+      - echo Checking versions
+      - python --version
+      - pip --version
+      - google-chrome --version
+      - chromedriver --version
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Running tests
+      - mkdir -p reports
+      - python test_todo_list_selenium.py
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Archiving test reports
+      - zip -r reports.zip reports/
+
+artifacts:
+  files:
+    - reports.zip
+    - '**/*.html'
+  base-directory: reports
