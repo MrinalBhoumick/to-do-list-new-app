@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 import unittest
@@ -7,8 +8,10 @@ import HtmlTestRunner
 class ToDoListTests(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome()
-        self.driver.get("https://mrinalbhoumick.github.io/to-do-list-new-app/")  # Use the URL where your app is hosted
+        options = Options()
+        options.add_argument("--headless")  # Run Chrome in headless mode
+        self.driver = webdriver.Chrome(options=options, executable_path="/usr/local/bin/chromedriver")
+        self.driver.get("https://mrinalbhoumick.github.io/to-do-list-new-app/")
 
     def tearDown(self):
         self.driver.quit()
@@ -47,12 +50,7 @@ class ToDoListTests(unittest.TestCase):
         self.assertNotIn("Buy groceries", task_list.text, "Task was not deleted successfully")
 
 if __name__ == "__main__":
-    # Define the report path
     report_path = './reports'
-    
-    # Create a TestSuite
     suite = unittest.TestLoader().loadTestsFromTestCase(ToDoListTests)
-    
-    # Run the test suite and generate the report
     runner = HtmlTestRunner.HTMLTestRunner(output=report_path, report_title="ToDo List Test Report", descriptions="Test results for ToDo List application")
     runner.run(suite)

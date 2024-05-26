@@ -6,16 +6,12 @@ phases:
       python: 3.12
     commands:
       - python -m pip install selenium
-      - python -m pip install html-testRunner
-      # Download and install the appropriate version of ChromeDriver
-      - CHROME_VERSION=$(google-chrome --version | cut -d " " -f3 | cut -d "." -f1)
-      - CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
-      - curl -s -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+      - wget -N https://chromedriver.storage.googleapis.com/94.0.4606.61/chromedriver_linux64.zip
       - unzip chromedriver_linux64.zip
-      - sudo mv chromedriver /usr/local/bin/chromedriver
-  pre_build:
-    commands:
-      - echo "Starting tests..."
   build:
     commands:
       - python test_todo_list_selenium.py
+artifacts:
+  files:
+    - "**/*"
+  discard-paths: yes
