@@ -5,13 +5,25 @@ phases:
     runtime-versions:
       python: 3.12
     commands:
-      - python -m pip install selenium
-      - python -m pip install html-testRunner
+      - python -m pip install --upgrade pip
       - wget -N https://chromedriver.storage.googleapis.com/94.0.4606.61/chromedriver_linux64.zip
       - unzip chromedriver_linux64.zip
+      - python -m pip install selenium
+      - python -m pip install html-testRunner
+      - python -m pip install awscli
+  pre_build:
+    commands:
+      - aws configure set aws_access_key_id $(aws configure get aws_access_key_id)
+      - aws configure set aws_secret_access_key $(aws configure get aws_secret_access_key)
+      - aws configure set default.region $(aws configure get default.region)
   build:
     commands:
       - python test_todo_list_selenium.py
+  post_build:
+    commands:
+      - aws s3 cp ./reports/TestResults___main__.ToDoListTests.html s3://automated-test-reports/reports/
+      - echo "HTML report uploaded to S3"
+
 artifacts:
   files:
     - "**/*"
